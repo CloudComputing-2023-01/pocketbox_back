@@ -24,7 +24,7 @@ public class S3Controller {
     public ResponseEntity getChildFolder(@RequestBody FolderRequestDto.GetFolderChildRequest request) {
         try{
             var list = s3.listFolder(S3Converter.toPath(request.getName(), request.getPath()));
-            return new ResponseEntity(DefaultRes.res(StatusCode.OK, "", S3Converter.toGetFolderChildResponse(list)), HttpStatus.OK);
+            return new ResponseEntity(DefaultRes.res(StatusCode.OK, "", S3Converter.toGetFolderChildResponse(list.directories, list.files)), HttpStatus.OK);
         } catch (Exception e){
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }

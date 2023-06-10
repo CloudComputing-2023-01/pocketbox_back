@@ -8,8 +8,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class S3Converter {
-    public static FolderResponseDto.GetFolderChildResponse toGetFolderChildResponse(List<String> objectList) {
-        return FolderResponseDto.GetFolderChildResponse.builder().name(objectList).build();
+    public static FolderResponseDto.GetFolderChildResponse toGetFolderChildResponse(List<S3Service.FolderPath> folderPath, List<S3Service.FilePath> filePaths) {
+        var list = new ArrayList<String>();
+
+        list.addAll(folderPath.stream().map((x) -> x.canonicalPath).toList());
+        list.addAll(filePaths.stream().map((x) -> x.canonicalPath).toList());
+
+        return FolderResponseDto.GetFolderChildResponse.builder()
+                .name(list).build();
     }
 
     public static FileResponseDto.GetFileResponse toGetFileResponse(String presigned) {

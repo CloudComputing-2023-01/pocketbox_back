@@ -67,10 +67,6 @@ public class S3ServiceImpl implements S3Service {
 
     @Override
     public ListResult listFolder(FolderPath path) {
-        if(!isFolderExists(path)) {
-            throw new UnsupportedOperationException("");
-        }
-
         var resp = runListRequest(path);
 
         var directories = listSubDirectoriesNames(resp);
