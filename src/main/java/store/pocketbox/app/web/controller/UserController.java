@@ -12,6 +12,7 @@ import store.pocketbox.app.domain.User;
 import store.pocketbox.app.exception.ResponseMessage;
 import store.pocketbox.app.exception.StatusCode;
 import store.pocketbox.app.service.UserService;
+import store.pocketbox.app.service.impl.UserServiceImpl;
 import store.pocketbox.app.web.dto.PostResponseDto;
 import store.pocketbox.app.web.dto.UserRequestDto;
 import store.pocketbox.app.web.dto.UserResponseDto;
@@ -24,7 +25,7 @@ import java.util.List;
 @RequestMapping("/user")
 @RequiredArgsConstructor
 public class UserController {
-    private final UserService userService;
+    private final UserServiceImpl userService;
 
     @GetMapping("/info")
     public ResponseEntity<DefaultRes<UserResponseDto.Info>> getMyProfile() throws Exception {
