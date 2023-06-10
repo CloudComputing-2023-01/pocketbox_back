@@ -16,7 +16,12 @@ public interface S3Service {
                 throw new UnsupportedOperationException("");
             }
 
-            canonicalPath = "/" + pathElements.stream().reduce((x, y) -> x + '/' + y).orElse("");
+            var path = pathElements.stream().reduce((x, y) -> x + '/' + y).orElse("");
+            if(!path.startsWith("/")) {
+                path = "/" + path;
+            }
+
+            canonicalPath = "/" + path;
         }
 
         public FolderPath getParentFolder() {
@@ -34,7 +39,11 @@ public interface S3Service {
                 throw new UnsupportedOperationException("");
             }
 
-            var path = "/" + pathElements.stream().reduce((x, y) -> x + '/' + y).orElse("");
+            var path = pathElements.stream().reduce((x, y) -> x + '/' + y).orElse("");
+            if(!path.startsWith("/")) {
+                path = "/" + path;
+            }
+
             if(!path.endsWith("/")) {
                 path += "/";
             }

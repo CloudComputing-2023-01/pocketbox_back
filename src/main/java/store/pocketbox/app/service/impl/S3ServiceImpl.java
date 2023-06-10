@@ -96,7 +96,8 @@ public class S3ServiceImpl implements S3Service {
     }
 
     private void runCreateFolderRequest(FolderPath path) {
-        PutObjectRequest objectRequest = PutObjectRequest.builder().bucket(s3.bucketName).key(path.canonicalPath + ".folder").contentType("text/plain").build();
+        String name = path.canonicalPath + ".folder";
+        PutObjectRequest objectRequest = PutObjectRequest.builder().bucket(s3.bucketName).key(name).contentType("text/plain").build();
 
         s3.getS3Client().putObject(objectRequest, RequestBody.fromBytes(new byte[]{0x01}));
     }
@@ -118,7 +119,7 @@ public class S3ServiceImpl implements S3Service {
     }
 
     private void guaranteeFolderExists(FolderPath path) {
-        for (int i = 0; i < path.pathElements.size() - 1; i++) {
+        for (int i = 0; i < path.pathElements.size(); i++) {
             var resp = runListRequest(new FolderPath(path.pathElements.subList(0, i)));
 
             var directories = listSubDirectoriesNames(resp);
