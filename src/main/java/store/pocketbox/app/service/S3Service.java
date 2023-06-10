@@ -13,7 +13,7 @@ public interface S3Service {
         public FilePath(List<String> _path) {
             pathElements = _path;
             if(_path.stream().anyMatch((x) -> x.contains("/"))) {
-                throw new UnsupportedOperationException("");
+                throw new UnsupportedOperationException("can't insert slash in path or filename: " + pathElements.stream().reduce((x, y) -> x + ", " + y));
             }
 
             var path = pathElements.stream().reduce((x, y) -> x + '/' + y).orElse("");
@@ -33,7 +33,7 @@ public interface S3Service {
         public FolderPath(List<String> _path) {
             pathElements = _path;
             if(_path.stream().anyMatch((x) -> x.contains("/"))) {
-                throw new UnsupportedOperationException("");
+                throw new UnsupportedOperationException("can't insert slash in path or filename: " + pathElements.stream().reduce((x, y) -> x + ", " + y));
             }
 
             var path = pathElements.stream().reduce((x, y) -> x + '/' + y).orElse("");
@@ -43,6 +43,7 @@ public interface S3Service {
             }
 
             canonicalPath = path;
+
         }
     }
 

@@ -24,7 +24,7 @@ public class S3ServiceImpl implements S3Service {
     @Override
     public String createPreSignedForUploadFile(FilePath path) {
         if(!isFolderExists(path.getParentFolder())) {
-            throw new UnsupportedOperationException("");
+            throw new UnsupportedOperationException("Please create destination folder first before uploading file");
         }
 
         PutObjectRequest objectRequest = PutObjectRequest.builder().bucket(s3.bucketName).key(path.canonicalPath)

@@ -11,8 +11,8 @@ public class S3Converter {
     public static FolderResponseDto.GetFolderChildResponse toGetFolderChildResponse(List<S3Service.FolderPath> folderPath, List<S3Service.FilePath> filePaths) {
         var list = new ArrayList<String>();
 
-        list.addAll(folderPath.stream().map((x) -> x.canonicalPath).toList());
-        list.addAll(filePaths.stream().map((x) -> x.canonicalPath).toList());
+        list.addAll(folderPath.stream().map((x) -> x.pathElements.get(x.pathElements.size() - 1) + "/").toList());
+        list.addAll(filePaths.stream().map((x) -> x.pathElements.get(x.pathElements.size() - 1)).filter((x) -> !x.equals(".folder")).toList());
 
         return FolderResponseDto.GetFolderChildResponse.builder()
                 .name(list).build();
@@ -32,6 +32,11 @@ public class S3Converter {
         var list = new ArrayList<String>();
         list.add(username);
         list.addAll(path);
+
+        if(list.contains(".folder")) {
+            throw new UnsupportedOperationException("forbidden filename or path or username");
+        }
+
         return new S3Service.FolderPath(list);
     }
 
