@@ -1,6 +1,7 @@
 package store.pocketbox.app.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.services.s3.model.*;
 import software.amazon.awssdk.services.s3.presigner.model.GetObjectPresignRequest;
@@ -14,6 +15,7 @@ import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
 
+@Component
 public class S3ServiceImpl implements S3Service {
 
     @Autowired

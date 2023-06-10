@@ -1,7 +1,10 @@
 package store.pocketbox.app.service;
 
+import org.springframework.stereotype.Component;
+
 import java.util.List;
 
+@Component
 public interface S3Service {
     public static class FilePath {
         public List<String> pathElements;
