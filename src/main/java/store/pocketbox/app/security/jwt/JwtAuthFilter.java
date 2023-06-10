@@ -8,6 +8,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.GenericFilterBean;
 import store.pocketbox.app.domain.User;
 import store.pocketbox.app.service.UserService;
+import store.pocketbox.app.service.impl.UserServiceImpl;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -21,11 +22,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class JwtAuthFilter extends GenericFilterBean {
     private final TokenService tokenService;
-    private final UserService userService;
+    private final UserServiceImpl userService;
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        String token = ((HttpServletRequest) request).getHeader("accessToken");
+        String token = ((HttpServletRequest) request).getHeader("Authorization");
 
         if(token != null && tokenService.verifyToken(token)){
             String email = tokenService.getUid(token);

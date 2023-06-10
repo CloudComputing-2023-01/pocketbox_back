@@ -35,4 +35,4 @@ spring:
             user-name-attribute: response
 
 jwt:
-  secret: "dkssudgktpdy vhzptqkrtmdlqslek"
+  secret: "dkssudgktpdy vhzptqkrtmdlqslek dkssudgktpdy vhzptqkrtmdlqslek"

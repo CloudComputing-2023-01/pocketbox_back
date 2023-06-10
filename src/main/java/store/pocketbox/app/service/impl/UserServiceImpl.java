@@ -77,7 +77,7 @@ public class UserServiceImpl {
         userRepository.save(currentUser);
         return currentUser;
     }
-    String verifyLogin(User user) {
+    public String verifyLogin(User user) {
         User validUser = getUserByEmail(user.getEmail());
         if (!Objects.equals(validUser.getPassword(), user.getPassword())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"비밀번호를 잘못 입력했습니다.");
@@ -86,7 +86,7 @@ public class UserServiceImpl {
             return tokenService.generateToken(validUser.getEmail(), "USER").getAccessToken();
         }
     }
-    User registerUser(User user) {
+    public User registerUser(User user) {
         Optional<User> newUser = userRepository.findByEmail(user.getEmail());
         if (newUser.isPresent()) {
             throw new ResponseStatusException(HttpStatus.CONFLICT,"이미 존재하는 유저 email 입니다.");

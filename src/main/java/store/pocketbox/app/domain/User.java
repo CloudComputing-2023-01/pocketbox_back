@@ -22,16 +22,16 @@ public class User extends BaseEntity {
     @Column(unique = true, nullable = false)
     private String email;
 
-    @Column(nullable = false)
+    @Column
     private String name;
 
     @Column
     private String password;
 
-    @Column(columnDefinition = "String default ''")
+    @Column
     private String avatar_url;
 
-    @Column(unique = true, nullable = false)
+    @Column
     private String nickname;
 
     @Column(columnDefinition = "Boolean default false")

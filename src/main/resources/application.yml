@@ -1,6 +1,9 @@
 server:
   port: 8080
 spring:
+  config:
+    import:
+      - classpath:./application-oauth.yml
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: ${DB_URL}

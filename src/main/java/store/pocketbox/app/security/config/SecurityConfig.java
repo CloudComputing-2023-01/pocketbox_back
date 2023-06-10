@@ -1,6 +1,8 @@
 package store.pocketbox.app.security.config;
 
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +17,7 @@ import store.pocketbox.app.security.UserOAuth2Service;
 import store.pocketbox.app.security.jwt.JwtAuthFilter;
 import store.pocketbox.app.security.jwt.TokenService;
 import store.pocketbox.app.service.UserService;
+import store.pocketbox.app.service.impl.UserServiceImpl;
 
 import static java.util.List.of;
 
@@ -25,7 +28,7 @@ public class SecurityConfig {
     private final UserOAuth2Service userOAuth2Service;
     private final OAuth2SuccessHandler successHandler;
     private final TokenService tokenService;
-    private final UserService userService;
+    private final UserServiceImpl userService;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
