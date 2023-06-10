@@ -17,11 +17,8 @@ public interface S3Service {
             }
 
             var path = pathElements.stream().reduce((x, y) -> x + '/' + y).orElse("");
-            if(!path.startsWith("/")) {
-                path = "/" + path;
-            }
 
-            canonicalPath = "/" + path;
+            canonicalPath = path;
         }
 
         public FolderPath getParentFolder() {
@@ -40,9 +37,6 @@ public interface S3Service {
             }
 
             var path = pathElements.stream().reduce((x, y) -> x + '/' + y).orElse("");
-            if(!path.startsWith("/")) {
-                path = "/" + path;
-            }
 
             if(!path.endsWith("/")) {
                 path += "/";

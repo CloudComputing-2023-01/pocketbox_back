@@ -124,14 +124,14 @@ public class S3ServiceImpl implements S3Service {
 
             var directories = listSubDirectoriesNames(resp);
             int finalI = i;
-            if(!directories.stream().anyMatch((x) -> x.pathElements.get(finalI + 1).equals(path.pathElements.get(finalI + 1)))) {
+            if(finalI == path.pathElements.size() || !directories.stream().anyMatch((x) -> x.pathElements.get(finalI + 1).equals(path.pathElements.get(finalI + 1)))) {
                 runCreateFolderRequest(new FolderPath(path.pathElements.subList(0, i + 1)));
             }
         }
     }
 
     private Boolean isFolderExists(FolderPath path) {
-        for (int i = 0; i < path.pathElements.size() - 1; i++) {
+        for (int i = 1; i < path.pathElements.size() - 1; i++) {
             var resp = runListRequest(new FolderPath(path.pathElements.subList(0, i)));
 
             var directories = listSubDirectoriesNames(resp);
