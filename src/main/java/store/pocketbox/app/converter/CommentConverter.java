@@ -4,12 +4,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import store.pocketbox.app.domain.Comment;
 import store.pocketbox.app.domain.Post;
 import store.pocketbox.app.domain.User;
-import store.pocketbox.app.repository.CommentRepository;
 import store.pocketbox.app.repository.PostRepository;
 import store.pocketbox.app.repository.UserRepository;
 import store.pocketbox.app.web.dto.CommentRequestDto;
 import store.pocketbox.app.web.dto.CommentResponseDto;
-import store.pocketbox.app.web.dto.PostResponseDto;
 
 import java.util.NoSuchElementException;
 

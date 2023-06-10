@@ -8,7 +8,6 @@ import store.pocketbox.app.domain.Comment;
 import store.pocketbox.app.domain.Post;
 import store.pocketbox.app.domain.User;
 import store.pocketbox.app.domain.mapping.PostLike;
-import store.pocketbox.app.exception.ResponseMessage;
 import store.pocketbox.app.repository.CommentRepository;
 import store.pocketbox.app.repository.PostLikeRepository;
 import store.pocketbox.app.repository.PostRepository;

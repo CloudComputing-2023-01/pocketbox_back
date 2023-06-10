@@ -6,8 +6,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import store.pocketbox.app.converter.CommentConverter;
 import store.pocketbox.app.domain.Comment;
-import store.pocketbox.app.domain.Post;
-import store.pocketbox.app.domain.User;
 import store.pocketbox.app.repository.CommentRepository;
 import store.pocketbox.app.repository.PostRepository;
 import store.pocketbox.app.repository.UserRepository;

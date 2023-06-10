@@ -9,6 +9,7 @@ import javax.persistence.*;
 @Entity
 @Builder
 @Getter
+@Setter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "user")
@@ -24,6 +25,9 @@ public class User extends BaseEntity {
     @Column(nullable = false)
     private String name;
 
+    @Column
+    private String password;
+
     @Column(columnDefinition = "String default ''")
     private String avatar_url;
 
@@ -35,5 +39,4 @@ public class User extends BaseEntity {
 
     @Column(columnDefinition = "Boolean default false")
     private Boolean acceptance_status;
-
 }
