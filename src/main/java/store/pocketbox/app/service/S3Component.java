@@ -13,5 +13,5 @@ public interface S3Component {
 
     S3Client getS3Client();
 
-    final public String bucketName = "cccloudspring2023";
+    final public String bucketName = "cloudspringtestcloudspringtest";
 }

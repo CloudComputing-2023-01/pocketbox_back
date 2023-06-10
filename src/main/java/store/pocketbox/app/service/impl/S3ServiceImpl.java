@@ -24,7 +24,7 @@ public class S3ServiceImpl implements S3Service {
     @Override
     public String createPreSignedForUploadFile(FilePath path) {
         if(!isFolderExists(path.getParentFolder())) {
-            throw new UnsupportedOperationException("");
+            throw new UnsupportedOperationException("Please create destination folder first before uploading file");
         }
 
         PutObjectRequest objectRequest = PutObjectRequest.builder().bucket(s3.bucketName).key(path.canonicalPath)
@@ -96,7 +96,8 @@ public class S3ServiceImpl implements S3Service {
     }
 
     private void runCreateFolderRequest(FolderPath path) {
-        PutObjectRequest objectRequest = PutObjectRequest.builder().bucket(s3.bucketName).key(path + "/.folder").contentType("text/plain").build();
+        String name = path.canonicalPath + ".folder";
+        PutObjectRequest objectRequest = PutObjectRequest.builder().bucket(s3.bucketName).key(name).contentType("text/plain").build();
 
         s3.getS3Client().putObject(objectRequest, RequestBody.fromBytes(new byte[]{0x01}));
     }
@@ -118,19 +119,19 @@ public class S3ServiceImpl implements S3Service {
     }
 
     private void guaranteeFolderExists(FolderPath path) {
-        for (int i = 0; i < path.pathElements.size() - 1; i++) {
+        for (int i = 1; i < path.pathElements.size(); i++) {
             var resp = runListRequest(new FolderPath(path.pathElements.subList(0, i)));
 
             var directories = listSubDirectoriesNames(resp);
             int finalI = i;
-            if(!directories.stream().anyMatch((x) -> x.pathElements.get(finalI + 1).equals(path.pathElements.get(finalI + 1)))) {
+            if(finalI == path.pathElements.size() || !directories.stream().anyMatch((x) -> x.pathElements.get(finalI).equals(path.pathElements.get(finalI)))) {
                 runCreateFolderRequest(new FolderPath(path.pathElements.subList(0, i + 1)));
             }
         }
     }
 
     private Boolean isFolderExists(FolderPath path) {
-        for (int i = 0; i < path.pathElements.size() - 1; i++) {
+        for (int i = 1; i < path.pathElements.size() - 1; i++) {
             var resp = runListRequest(new FolderPath(path.pathElements.subList(0, i)));
 
             var directories = listSubDirectoriesNames(resp);
