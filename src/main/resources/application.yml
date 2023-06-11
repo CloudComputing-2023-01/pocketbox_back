@@ -1,3 +1,9 @@
+cloud:
+  aws:
+    region:
+      static: us-east-1
+    stack:
+      auto: false
 server:
   port: 8080
 spring:
@@ -6,9 +12,9 @@ spring:
       - classpath:./application-oauth.yml
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: ${DB_URL}
-    username: ${DB_USER}
-    password: ${DB_PASSWORD}
+    url: jdbc:mysql://127.0.0.1:3306/pocketbox
+    username: pocketbox
+    password: pocketbox
   output:
     ansi:
       enabled: always
