@@ -39,4 +39,7 @@ public class User extends BaseEntity {
 
     @Column(columnDefinition = "Boolean default false")
     private Boolean acceptance_status;
+
+    @Column
+    private String firebaseToken;
 }

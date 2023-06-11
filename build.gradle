@@ -44,6 +44,7 @@ dependencies {
 	testImplementation("org.junit.jupiter:junit-jupiter")
 	testRuntimeOnly ("org.junit.vintage:junit-vintage-engine:5.9.0")
 
+	implementation 'com.google.firebase:firebase-admin:9.1.1'
 }
 
 tasks.named('test') {
