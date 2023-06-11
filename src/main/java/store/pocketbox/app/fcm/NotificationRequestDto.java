@@ -7,7 +7,7 @@ import lombok.Setter;
 @Builder
 @Setter
 @Getter
-public class NotificationRequest {
+public class NotificationRequestDto {
     private String title;
     private String token;
     private String message;

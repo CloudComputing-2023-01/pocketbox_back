@@ -10,8 +10,6 @@ import store.pocketbox.app.domain.User;
 import store.pocketbox.app.repository.UserRepository;
 import store.pocketbox.app.service.impl.UserServiceImpl;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 
@@ -26,7 +24,7 @@ public class NotificationService {
 
         userRepository.save(user);
     }
-    public void sendNotification(NotificationRequest notificationRequest) throws ExecutionException, InterruptedException {
+    public void sendNotification(NotificationRequestDto notificationRequest) throws ExecutionException, InterruptedException {
         Message message = Message.builder()
                 .setToken(notificationRequest.getToken())
                 .setWebpushConfig(WebpushConfig.builder().putHeader("ttl", "300")
