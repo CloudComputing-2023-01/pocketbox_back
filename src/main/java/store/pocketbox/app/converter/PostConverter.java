@@ -1,6 +1,6 @@
 package store.pocketbox.app.converter;
 
-import lombok.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import store.pocketbox.app.domain.Comment;
 import store.pocketbox.app.domain.Post;
@@ -11,18 +11,14 @@ import store.pocketbox.app.web.dto.CommentResponseDto;
 import store.pocketbox.app.web.dto.PostRequestDto;
 import store.pocketbox.app.web.dto.PostResponseDto;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Component
+@RequiredArgsConstructor
 public class PostConverter {
-    private UserRepository userRepository;
-
-    public PostConverter(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    private final UserRepository userRepository;
 
     public static PostResponseDto.CreatePostDto toCreatePostDto(Post post) {
         return PostResponseDto.CreatePostDto.builder()

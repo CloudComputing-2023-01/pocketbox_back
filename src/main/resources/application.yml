@@ -1,24 +1,37 @@
+cloud:
+  aws:
+    region:
+      static: us-east-1
+    stack:
+      auto: false
+server:
+  port: 8080
 spring:
+  config:
+    import:
+      - classpath:./application-oauth.yml
   datasource:
-    hikari:
-      driver-class-name: org.h2.Driver
-      jdbc-url: jdbc:h2:mem:public;
-      username: sa
-      password: 1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${DB_URL}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+  output:
+    ansi:
+      enabled: always
   jpa:
     hibernate:
-      id:
-        new_generator_mappings: true
-      ddl-auto: create-drop
-      naming:
-        implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
-        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
-    show-sql: true
-    database-platform: org.hibernate.dialect.H2Dialect
+      ddl-auto: create
     properties:
       hibernate:
+        show_sql: true
         format_sql: true
-logging:
-  level:
-    org.hibernate: debug
-    org.springframework: debug
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        use_sql_comments: false
+        hbm2ddl:
+          auto: update
+        default_batch_fetch_size: 1000
+
+logging.level:
+  org.hibernate.SQL: debug
+# org.hibernate.type: trace #스프링 부트 2.x, hibernate5
+# org.hibernate.orm.jdbc.bind: trace #스프링 부트 3.x, hibernate6
