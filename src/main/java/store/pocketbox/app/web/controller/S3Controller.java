@@ -20,7 +20,7 @@ public class S3Controller {
     @Autowired
     private final S3Service s3;
 
-    @GetMapping("/folder")
+    @PutMapping("/folder")
     public ResponseEntity getChildFolder(@RequestBody FolderRequestDto.GetFolderChildRequest request) {
         try{
             var list = s3.listFolder(S3Converter.toPath(request.getName(), request.getPath()));
@@ -60,7 +60,7 @@ public class S3Controller {
         }
     }
 
-    @GetMapping("/file")
+    @PutMapping("/file")
     public ResponseEntity getFile(@RequestBody FileRequestDto.GetFileRequest request) {
         try {
             var res = s3.createPreSignedForDownloadFile(S3Converter.toFilePath(request.getName(), request.getPath(), request.getFilename()));
