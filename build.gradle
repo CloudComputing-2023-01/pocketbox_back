@@ -49,9 +49,6 @@ dependencies {
 	implementation 'net.lingala.zip4j:zip4j:2.10.0'
 	implementation 'org.apache.commons:commons-text:1.10.0'
 	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
-	implementation "software.amazon.awssdk:s3-transfer-manager"
-	implementation "software.amazon.awssdk:bom:2.19.1"
-	implementation "software.amazon.awssdk.crt:aws-crt:0.20.3"
 
 }
 

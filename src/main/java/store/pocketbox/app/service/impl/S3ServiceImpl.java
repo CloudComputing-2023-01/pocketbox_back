@@ -1,8 +1,6 @@
 package store.pocketbox.app.service.impl;
 
-import com.amazonaws.services.s3.transfer.MultipleFileDownload;
-import com.amazonaws.services.s3.transfer.TransferManager;
-import com.amazonaws.services.s3.transfer.TransferProgress;
+import com.amazonaws.services.s3.transfer.*;
 import lombok.extern.slf4j.Slf4j;
 import net.lingala.zip4j.ZipFile;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -16,12 +14,17 @@ import software.amazon.awssdk.services.s3.presigner.model.GetObjectPresignReques
 import software.amazon.awssdk.services.s3.presigner.model.PresignedGetObjectRequest;
 import software.amazon.awssdk.services.s3.presigner.model.PresignedPutObjectRequest;
 import software.amazon.awssdk.services.s3.presigner.model.PutObjectPresignRequest;
-import software.amazon.awssdk.transfer.s3.S3TransferManager;
-import software.amazon.awssdk.transfer.s3.model.*;
-import software.amazon.awssdk.transfer.s3.progress.LoggingTransferListener;
 import store.pocketbox.app.service.S3Component;
 import store.pocketbox.app.service.S3Service;
+import com.amazonaws.AmazonServiceException;
+import com.amazonaws.services.s3.transfer.MultipleFileUpload;
+import com.amazonaws.services.s3.transfer.TransferManager;
+import com.amazonaws.services.s3.transfer.TransferManagerBuilder;
+import com.amazonaws.services.s3.transfer.Upload;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
@@ -39,7 +42,7 @@ public class S3ServiceImpl implements S3Service {
     @Autowired
     S3Component s3Component;
     @Autowired
-    S3TransferManager transferManager;
+    TransferManager transferManager;
 
     @Override
     public String createPreSignedForUploadFile(FilePath path) {
@@ -165,26 +168,19 @@ public class S3ServiceImpl implements S3Service {
     }
     public Resource downloadZip(String prefix) throws IOException, InterruptedException {
         String bucket = s3Component.bucketName;
-        // (1)
-        // 서버 로컬에 생성되는 디렉토리, 해당 디렉토리에 파일이 다운로드된다
+
         File localDirectory = new File(RandomStringUtils.randomAlphanumeric(6) + "-s3-download");
         // 서버 로컬에 생성되는 zip 파일
         ZipFile zipFile = new ZipFile(RandomStringUtils.randomAlphanumeric(6) + "-s3-download.zip");
+        log.info(transferManager.downloadDirectory(bucket, prefix, localDirectory).getBucketName());
+        log.info(String.valueOf(transferManager.downloadDirectory(bucket, prefix, localDirectory).getState()));
+        log.info(transferManager.downloadDirectory(bucket, prefix, localDirectory).getKeyPrefix());
         try {
             // (2)
             // TransferManager -> localDirectory에 파일 다운로드
+            MultipleFileDownload downloadDirectory = transferManager.downloadDirectory(bucket, prefix, localDirectory);
 
-            DownloadFileRequest downloadFileRequest =
-                    DownloadFileRequest.builder()
-                            .getObjectRequest(b -> b.bucket(bucket).key(prefix))
-                            .addTransferListener(LoggingTransferListener.create())
-                            .destination(Paths.get(localDirectory.getPath()))
-                            .build();
-            FileDownload downloadFile = transferManager.downloadFile(downloadFileRequest);
-            CompletedFileDownload downloadResult = downloadFile.completionFuture().join();
-            log.info("Content length [{}]", downloadResult.response().contentLength());
-
-            /*// (3)
+            // (3)
             // 다운로드 상태 확인
             log.info("[" + prefix + "] download progressing... start");
             DecimalFormat decimalFormat = new DecimalFormat("##0.00");
@@ -194,27 +190,23 @@ public class S3ServiceImpl implements S3Service {
                 double percentTransferred = progress.getPercentTransferred();
                 log.info("[" + prefix + "] " + decimalFormat.format(percentTransferred) + "% download progressing...");
             }
-            log.info("[" + prefix + "] download directory from S3 success!");*/
+            log.info("[" + prefix + "] download directory from S3 success!");
 
             // (4)
             // 로컬 디렉토리 -> 로컬 zip 파일에 압축
             log.info("compressing to zip file...");
             zipFile.addFolder(new File(localDirectory.getName() + "/" + prefix));
         } finally {
-
             // (5)
             // 로컬 디렉토리 삭제
             File[] files = localDirectory.listFiles();
-
             assert files != null;
             for (File file : files) {
-                log.info(file.getName());
                 remove(file);
             }
             if (localDirectory.delete()) {
                 log.info("File [" + localDirectory.getName() + "] delete success");
             }
-
         }
 
         // (6)
