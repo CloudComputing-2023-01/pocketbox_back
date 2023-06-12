@@ -1,7 +1,9 @@
 package store.pocketbox.app.service;
 
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.util.List;
 
 @Component
@@ -68,4 +70,5 @@ public interface S3Service {
     ListResult listFolder(FolderPath path);
 
     void deleteFolder(FolderPath path);
+    Resource downloadZip(String prefix) throws IOException, InterruptedException;
 }
