@@ -18,9 +18,9 @@ import store.pocketbox.app.service.S3Component;
 
 @Component
 public class S3ComponentImpl implements S3Component {
-    private final S3Presigner signer = S3Presigner.builder().region(Region.US_EAST_2).build();
-    private final S3Client client = S3Client.builder().region(Region.US_EAST_2).build();
-    private final S3AsyncClient asyncClient = S3AsyncClient.builder().region(Region.US_EAST_2).build();
+    private final S3Presigner signer = S3Presigner.builder().region(Region.US_EAST_1).build();
+    private final S3Client client = S3Client.builder().region(Region.US_EAST_1).build();
+    private final S3AsyncClient asyncClient = S3AsyncClient.builder().region(Region.US_EAST_1).build();
 
     public S3Presigner getS3Presigner() {
         return signer;
