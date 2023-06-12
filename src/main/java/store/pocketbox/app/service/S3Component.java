@@ -14,5 +14,5 @@ public interface S3Component {
     S3Presigner getS3Presigner();
     S3Client getS3Client();
     S3AsyncClient getS3AsyncClient();
-    final public String bucketName = "s3testdmstmddn";
+    final public String bucketName = "cloudspringtestcloudspringtest";
 }
